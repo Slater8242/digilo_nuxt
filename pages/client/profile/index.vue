@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Popup from "~/components/popups/Popup.vue";
 import ResetPassword from "~/components/popups/ResetPassword.vue";
-import UploadPhotos from "~/components/popups/UploadPhotos.vue";
+import UploadPhotos from "~/components/popups/UploadImages.vue";
 
 definePageMeta({
   layout: "user"

@@ -20,6 +20,7 @@ const images = Array.from({ length: 3 }, (_, index) => ({
 }));
 
 const config = {
+  autoplay: 5000,
   height: 200,
   itemsToShow: 1.3,
   gap: 40,
