@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+:root {
+    /* colors */
+    --main: #3dce15;
+    --text-white: #fdfdfd;
+    --text-black: #202020;
+    --text-green: #3dce15;
+    --bg-white: #fbfbfb;
+    --bg-grey: #f4f4f4;
+    --bg-black: #202020;
+    --text-placeholder-color: #7e7e7e;
+    --stroke-dark-green: #b9d0b1;
+
+    /* Desktop Headings */
+    --h1-desktop: 80px;
+    --h2-desktop: 55px;
+    --h3-desktop: 45px;
+    --h4-desktop: 40px;
+    --h5-desktop: 30px;
+    --h6-desktop: 22px;
+
+    /* Tablet Headings */
+    --h1-tablet: 60px;
+    --h2-tablet: 50px;
+    --h3-tablet: 40px;
+    --h4-tablet: 35px;
+    --h5-tablet: 28px;
+    --h6-tablet: 20px;
+
+    /* Mobile Headings */
+    --h1-mobile: 38px;
+    --h2-mobile: 35px;
+    --h3-mobile: 24px;
+    --h4-mobile: 22px;
+    --h5-mobile: 20px;
+    --h6-mobile: 16px;
+
+    /* Body Text */
+    --body1-desktop: 22px;
+    --body2-desktop: 20px;
+    --body1-tablet: 20px;
+    --body2-tablet: 18px;
+    --body1-mobile: 16px;
+    --body2-mobile: 14px;
+
+    /* Buttons */
+    --primary-button-desktop: 27px;
+    --secondary-button-desktop: 25px;
+    --tertiary-button-desktop: 18px;
+    --quaternary-button-desktop: 22px;
+
+    --primary-button-tablet: 26px;
+    --secondary-button-tablet: 25px;
+    --tertiary-button-tablet: 18px;
+    --quaternary-button-tablet: 20px;
+
+    --primary-button-mobile: 20px;
+    --secondary-button-mobile: 18px;
+    --tertiary-button-mobile: 16px;
+    --quaternary-button-mobile: 18px;
+
+    /* Input Fields */
+    --text-placeholder-desktop: 18px;
+    --text-input-desktop: 18px;
+    --text-placeholder-tablet: 16px;
+    --text-input-tablet: 16px;
+    --text-placeholder-mobile: 14px;
+    --text-input-mobile: 14px;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Nunito sans', sans-serif;
+}
+
+html, body{
+    height: 100%;
+    .nuxt-icon{
+        height: inherit;
+        margin-bottom: 0;
+    }
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+}

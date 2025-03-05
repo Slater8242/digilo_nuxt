@@ -1,0 +1,13 @@
+{
+  "sideMenu": {
+    "loans": "mani aizdevumi",
+    "profile": "mans profils",
+    "chat": "sarakste",
+    "help": "palīdzība",
+    "logout": "logout",
+    "terms": "lietošanas noteikumi"
+  },
+  "investor": {
+
+  }
+}

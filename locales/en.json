@@ -1,0 +1,15 @@
+{
+  "sideMenu": {
+    "loans": "my loans",
+    "profile": "my profile",
+    "chat": "chat",
+    "help": "help",
+    "logout": "logout",
+    "terms": "terms of use"
+  },
+  "profile": {
+    "loans": {
+
+    }
+  }
+}
