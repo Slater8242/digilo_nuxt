@@ -7,6 +7,10 @@ definePageMeta({
   layout: "user"
 })
 
+useHead({
+  title: "Profile",
+})
+
 const fields = ref([
   { label: "Vārds", name: "first-name", type: "text", value: "" },
   { label: "Uzvārds", name: "last-name", type: "text", value: "" },

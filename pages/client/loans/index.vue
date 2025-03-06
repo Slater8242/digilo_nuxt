@@ -14,6 +14,10 @@ definePageMeta({
   layout: "user"
 })
 
+useHead({
+  title: "Loans",
+})
+
 const images = Array.from({ length: 3 }, (_, index) => ({
   id: index + 1,
   url: sliderImage,
@@ -27,117 +31,121 @@ const config = {
   wrapAround: true,
 };
 
-const isPopupVisible = ref(false);
-
-function togglePopup() {
-  isPopupVisible.value = !isPopupVisible.value;
-}
-
+const paymentMethodsPopup = ref(false);
+const paymentCalendarPopup = ref(false);
 </script>
 
 <template>
-  <div class="overview">
-    <div class="user-data">
-      <div class="user-info">
-        <img :src="avatar" alt="avatar" class="avatar">
-        <div class="user-name">
-          <span>Sveiki!</span>
-          <span>Janis Dzenis</span>
+  <div class="loans">
+    <div class="overview">
+      <div class="user-data">
+        <div class="user-info">
+          <img :src="avatar" alt="avatar" class="avatar">
+          <div class="user-name">
+            <span>Sveiki!</span>
+            <span>Janis Dzenis</span>
+          </div>
+        </div>
+        <div class="user-loan">
+          <div class="text">
+            <a :href="pdfFile" download="loan.pdf" >
+              <PdfIcon style="height: 24px; width: 20px" filled/>
+              Parakstīts līgums
+            </a>
+            <span class="loan-id">5165665</span>
+          </div>
         </div>
       </div>
-      <div class="user-loan">
-        <div class="text">
-          <a :href="pdfFile" download="loan.pdf" >
-            <PdfIcon style="height: 24px; width: 20px" filled/>
-            Parakstīts līgums
-          </a>
-          <span class="loan-id">5165665</span>
+      <div class="diagram">
+        <div class="info">
+          <div class="diagram-text">
+            <span class="small-text">Samaksājat $ 80 400 no $ 120 000</span>
+            <span class="small-text">Veikto maksājumu skaits</span>
+          </div>
+          <span class="out-of">12/50</span>
         </div>
+        <Progress size="165" strokeWidth="10" progress="67"/>
       </div>
     </div>
-    <div class="diagram">
-      <div class="info">
-        <div class="diagram-text">
-          <span class="small-text">Samaksājat $ 80 400 no $ 120 000</span>
-          <span class="small-text">Veikto maksājumu skaits</span>
-        </div>
-        <span class="out-of">12/50</span>
-      </div>
-      <Progress size="165" strokeWidth="10" progress="67"/>
-    </div>
-  </div>
-  <div class="payment">
-    <div class="payment-info">
-      <div class="actual-payment">
-        <span class="small-text">Aktuālais maksājums</span>
-        <span class="small-text">
+    <div class="payment">
+      <div class="payment-info">
+        <div class="actual-payment">
+          <span class="small-text">Aktuālais maksājums</span>
+          <span class="small-text">
           <strong>$ 5 000</strong>
         </span>
-      </div>
-      <div class="total-payment">
-        <span class="small-text">Pamatsummas atlikums</span>
-        <span class="small-text">
+        </div>
+        <div class="total-payment">
+          <span class="small-text">Pamatsummas atlikums</span>
+          <span class="small-text">
           <strong>$ 30 000</strong>
         </span>
-      </div>
-    </div>
-    <div class="payment-date">
-      <span class="small-text">Nākamais maksājuma datums</span>
-      <div class="date-container">
-        <div class="date">7</div>
-        <div class="month-year">
-          <div class="month small-text">Dec.</div>
-          <div class="year small-text">2023</div>
         </div>
       </div>
-      <div class="payment-menu">
-        <span>&#8942;</span>
+      <div class="payment-date">
+        <span class="small-text">Nākamais maksājuma datums</span>
+        <div class="date-container">
+          <div class="date">7</div>
+          <div class="month-year">
+            <div class="month small-text">Dec.</div>
+            <div class="year small-text">2023</div>
+          </div>
+        </div>
+        <div class="payment-calendar" @click="paymentCalendarPopup = true">
+          <span>&#8942;</span>
+        </div>
+      </div>
+      <div class="payment-button">
+        <Button size="big" @click="paymentMethodsPopup = true">Maksāt</Button>
       </div>
     </div>
-    <div class="payment-button">
-      <Button size="big" @click="togglePopup">Maksāt</Button>
+    <div class="contracts">
+      <h1>Tavi līgumi</h1>
+      <Contract v-for="n in 4" :key="n"
+                :contract-number="5165665"
+                :loan-amount="12000"
+                :next-payment-amount="312.31"
+                :payment-deadline="'05.12.24'"
+      />
     </div>
-  </div>
-  <div class="contracts">
-    <h1>Tavi līgumi</h1>
-    <Contract v-for="n in 4" :key="n"
-        :contract-number="5165665"
-        :loan-amount="12000"
-        :next-payment-amount="312.31"
-        :payment-deadline="'05.12.24'"
-    />
-  </div>
-  <div class="carousel">
-    <Carousel v-bind="config">
-      <Slide v-for="image in images" :key="image.id">
-        <img :src="image.url" alt="image" />
-        <div class="note" style="position: absolute">No 2 % likmēi</div>
-        <div class="description" style="position: absolute">Tavas summu
-          palielinājumu iespējas</div>
-      </Slide>
+    <div class="carousel">
+      <Carousel v-bind="config">
+        <Slide v-for="image in images" :key="image.id">
+          <img :src="image.url" alt="image" />
+          <div class="note" style="position: absolute">No 2 % likmēi</div>
+          <div class="description" style="position: absolute">Tavas summu
+            palielinājumu iespējas</div>
+        </Slide>
 
-      <template #addons>
-        <Pagination />
-      </template>
-    </Carousel>
-  </div>
-  <div class="last-payments">
-    <h1>Pedēji maksājumi</h1>
-    <LastPayments />
+        <template #addons>
+          <Pagination />
+        </template>
+      </Carousel>
+    </div>
+    <div class="last-payments">
+      <h1>Pedēji maksājumi</h1>
+      <LastPayments />
+    </div>
   </div>
 
   <Popup
-      :show="isPopupVisible"
-      :content-style="{
-        maxWidth: '572px',
-      }"
-      @close="togglePopup"
+      :show="paymentMethodsPopup"
+      @close="paymentMethodsPopup = false"
   >
     <PaymentMethods/>
+  </Popup>
+
+  <Popup :show="paymentCalendarPopup" @close="paymentCalendarPopup = false">
+    <h1>calendar</h1>
   </Popup>
 </template>
 
 <style scoped>
+.loans {
+  display: grid;
+  row-gap: 60px;
+}
+
 .overview {
   display: flex;
   column-gap: 105px;
@@ -272,13 +280,13 @@ function togglePopup() {
   font-size: 1.5rem;
 }
 
-.payment-menu{
+.payment-calendar{
   align-self: start;
   font-size: 20px;
   color: #7e7e7e;
 }
 
-.payment-menu span{
+.payment-calendar span{
   cursor: pointer;
 }
 

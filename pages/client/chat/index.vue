@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Dropdown from "~/components/ui/Dropdown.vue";
+import TextInput from "~/components/ui/TextInput.vue";
 
 definePageMeta({
   layout: "user"
@@ -9,25 +10,43 @@ useHead({
   title: 'Chat',
 })
 
+const inputVal = ref("")
 const option = ref("");
 
 const options=[
-  "Papildus summas saņemšanai",
-  "Jauna kredīta saņemšanai",
-  "Kredīta atlikums",
-  "Cits"
+  {value: "additionalAmount" ,label:"Papildus summas saņemšanai"},
+  {value: "newCredit" ,label:"Jauna kredīta saņemšanai"},
+  {value: "balance" ,label:"Kredīta atlikums"},
+  {value: "other" ,label:"Cits"},
 ];
 </script>
 
 <template>
-  <span class="choose">Izvēlies jebkuru papildu pakalpojumu, kuru vēlies noformēt. Aizpildi anketu, un mēs ar tevi sazināsimies.</span>
+  <div class="chat">
+    <span class="text">Izvēlies jebkuru papildu pakalpojumu, kuru vēlies noformēt. <br>Aizpildi anketu, un mēs ar tevi sazināsimies.<br></span>
 
-  <Dropdown v-model:selected="option" :options="options" placeholder="Iesniegumi"/>
-  <p>{{option}}</p>
+    <Dropdown v-model="option" :options="options" placeholder="Iesniegumi"/>
+
+    <div class="additional-amount" v-if="option.value === 'additionalAmount'">
+      <TextInput v-model="inputVal" placeholder="Liguma numurs"/>
+      <TextInput v-model="inputVal" placeholder="Vēlamā aizdevuma summa"/>
+      <TextInput v-model="inputVal" placeholder="Aizdevuma mērķis"/>
+    </div>
+  </div>
 </template>
 
 <style>
-.choose{
+.chat{
+  display: grid;
+  row-gap: 30px;
+}
+
+.text{
   font-size: var(--body1-desktop);
+}
+
+.additional-amount{
+  display: grid;
+  row-gap: 25px;
 }
 </style>

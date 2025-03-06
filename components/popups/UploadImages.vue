@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import Button from "~/components/ui/Button.vue";
+import PauseIcon from "@/assets/icons/pause.svg"
+import CancelIcon from "@/assets/icons/cancel.svg"
+import SuccessIcon from "@/assets/icons/success.svg"
 
 const images = ref([]);
 const fileInput = ref(null);
+const progressValue = ref(100);
 
 const selectFile = () => {
   fileInput.value.click();
@@ -47,12 +51,12 @@ function formatBytes(bytes:number) {
       @drop.prevent="handleFileSelect"
   >
     <span style="font-size: var(--h6-desktop)">Upload photos</span>
-    <div class="upload-avatar">
+    <div class="upload-avatar" @click="selectFile">
       <img src="@/assets/icons/upload.png" alt="upload" width="65" height="56">
       <div class="text">
         <p style="font-size: var(--body2-mobile)">
           Drop your image here, or
-          <strong class="browse" @click="selectFile">browse</strong>
+          <strong>browse</strong>
         </p>
         <p style="font-size: var(--text-placeholder-mobile)">Supports: PNG, JPG, JPEG, WEBP</p>
       </div>
@@ -63,17 +67,22 @@ function formatBytes(bytes:number) {
         <div class="image-info">
           <img :src="image.img" alt="image">
           <div class="info-container">
-            <span class="size">{{image.data.name}}</span>
+            <span class="size" :class="{'success': progressValue===100}">{{image.data.name}}</span>
             <span class="title">{{formatBytes(image.data.size)}}</span>
           </div>
         </div>
         <div class="upload-icons">
-
+          <PauseIcon v-if="progressValue!==100" style="height: 20px; width: 20px" filled/>
+          <CancelIcon style="height: 20px; width: 20px" filled/>
+          <SuccessIcon v-if="progressValue===100" style="height: 20px; width: 20px" filled/>
         </div>
       </div>
-      <span>linear progress</span>
+      <div class="progress">
+        <progress :value="progressValue" max="100"></progress>
+        <span>{{progressValue}}%</span>
+      </div>
     </div>
-    <Button>Save</Button>
+    <Button variant="tertiary">Save</Button>
   </div>
 </template>
 
@@ -92,14 +101,25 @@ function formatBytes(bytes:number) {
   align-content: center;
   justify-items: center;
   text-align: center;
-}
-
-.browse{
   cursor: pointer;
 }
 
 .text {
   margin-top: 15px;
+}
+
+.image-load{
+  display: grid;
+  row-gap: 10px;
+  border: 1px solid var(--text-grey);
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 30px;
+}
+
+.image-details{
+  display: flex;
+  justify-content: space-between;
 }
 
 .image-info{
@@ -124,9 +144,41 @@ function formatBytes(bytes:number) {
   font-size: 10px;
 }
 
+.success{
+  color: var(--text-green);
+}
+
 .title{
   font-size: 8px;
   color: var(--text-placeholder-color);
 }
 
+.upload-icons{
+  display: flex;
+  column-gap: 9px;
+}
+
+.progress{
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
+  font-size: 8px;
+  color: var(--text-placeholder-color);
+}
+
+progress{
+  appearance: none;
+  width: 100%;
+  height: 5px;
+}
+
+progress::-webkit-progress-bar {
+  border-radius: 4px;
+  background-color: var(--bg-grey);
+}
+
+progress::-webkit-progress-value {
+  border-radius: 4px;
+  background-color: var(--text-green);
+}
 </style>

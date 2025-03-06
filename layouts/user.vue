@@ -44,8 +44,6 @@ import Footer from "~/components/layout/Footer.vue";
 .user-content{
   margin-top: 30px;
   margin-bottom: 165px;
-  display: grid;
-  row-gap: 60px;
 }
 
 .user-menu {
