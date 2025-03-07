@@ -7,7 +7,7 @@ const props = defineProps({
   },
   variant: {
     type: String,
-    default: "button"
+    default: "secondary-button"
   }
 });
 
@@ -30,7 +30,8 @@ button {
   border-radius: 40px;
   cursor: pointer;
 }
-.button{
+.secondary-button{
+  width: 232px;
   border: 2px solid transparent;
   color: var(--text-white);
   background-image: linear-gradient(180deg, #5EED36 0%, #2E7F17 100%), linear-gradient(180deg, #5EED36 0%, #2E7F17 100%);

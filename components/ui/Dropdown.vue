@@ -54,7 +54,7 @@ const selectItem = (item) => {
   color: var(--text-placeholder-color);
 }
 
-/* Инпут для отображения выбранного значения */
+/* Инпут для отображения выбр0анного значения */
 .dropdown-input {
   height: 48px;
   padding: 12px 26px;

@@ -21,13 +21,14 @@ const isPlaceholderActive = computed(() => isFocused.value || props.modelValue);
 </script>
 
 <template>
-  <div class="input-container">
+  <div class="input-container" :class="{'margin-top': isPlaceholderActive}">
     <input
         :value="modelValue"
         @input="updateValue"
         @focus="isFocused = true"
         @blur="isFocused = false"
         class="input-field"
+        :class="{'active': isFocused}"
         type="text"
         id="custom-input"
         required
@@ -48,6 +49,11 @@ const isPlaceholderActive = computed(() => isFocused.value || props.modelValue);
   position: relative;
   width: 460px;
   height: 48px;
+  transition: margin-top 0.3s ease;
+}
+
+.margin-top {
+  margin-top: 19px;
 }
 
 /* Инпут */
@@ -59,6 +65,10 @@ const isPlaceholderActive = computed(() => isFocused.value || props.modelValue);
   outline: none;
   border: none;
   box-shadow: 2px 2px 10px #00000040;
+}
+
+.input-field.active {
+  border: 2px solid #3DCE15
 }
 
 /* Плейсхолдер */
@@ -74,8 +84,8 @@ const isPlaceholderActive = computed(() => isFocused.value || props.modelValue);
 
 /* Когда поле в фокусе или есть текст */
 .input-placeholder.active {
-  top: -8px;
-  left: 12px;
-  font-size: 12px;
+  top: -21px;
+  left: 26px;
+  font-size: var(--text-placeholder-mobile);
 }
 </style>

@@ -67,7 +67,7 @@ const handleSubmit = () => {
           <img src="../../assets/images/citadele.png" alt="citadele">
         </span>
       </div>
-      <Button size="big" style="width: 232px">Maksāt</Button>
+      <Button size="big">Maksāt</Button>
     </form>
 
     <div v-if="activeTab === 'bank-details'" class="details-window">

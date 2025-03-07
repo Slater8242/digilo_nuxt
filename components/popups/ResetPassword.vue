@@ -17,7 +17,7 @@ import Button from "~/components/ui/Button.vue";
           class="form-input"
           placeholder="E-pasta">
     </div>
-    <Button size="big" style="width: 232px">Nosūtīt</Button>
+    <Button size="big">Nosūtīt</Button>
   </div>
 </template>
 
