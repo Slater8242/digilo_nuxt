@@ -9,6 +9,7 @@ import Popup from "~/components/popups/Popup.vue";
 import pdfFile from "@/public/sample.pdf"
 import PaymentMethods from "~/components/popups/PaymentMethods.vue";
 import Button from "~/components/ui/Button.vue";
+import Calendar from '~/components/popups/Calendar.vue';
 
 definePageMeta({
   layout: "user"
@@ -17,6 +18,9 @@ definePageMeta({
 useHead({
   title: "Loans",
 })
+
+const paymentMethodsPopup = ref(false);
+const paymentCalendarPopup = ref(false);
 
 const images = Array.from({ length: 3 }, (_, index) => ({
   id: index + 1,
@@ -31,8 +35,15 @@ const config = {
   wrapAround: true,
 };
 
-const paymentMethodsPopup = ref(false);
-const paymentCalendarPopup = ref(false);
+// Dummy data (JSON) for amounts
+const paymentData: { [key: string]: number } = {
+  '2025-03-01': 50.32,
+  '2025-03-02': 75,
+  '2025-03-03': 100.76,
+  '2025-03-04': 150,
+  '2025-03-05': 200.25,
+};
+
 </script>
 
 <template>
@@ -136,7 +147,7 @@ const paymentCalendarPopup = ref(false);
   </Popup>
 
   <Popup :show="paymentCalendarPopup" @close="paymentCalendarPopup = false">
-    <h1>calendar</h1>
+    <Calendar :payment-data="paymentData"/>
   </Popup>
 </template>
 
