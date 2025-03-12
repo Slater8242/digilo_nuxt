@@ -3,23 +3,15 @@ import Button from '../ui/Button.vue';
 
 const props = defineProps<{
   paymentData: Record<string, number>; // Expecting an object with date strings as keys and numbers as values
+  show: boolean;
 }>();
 
-const date = ref(new Date())
 
-const attrs = ref([
-{
-  key: "",
-  highlight: {
-    style:{
-      backgroundColor: "#3dce15",
-      borderRadius: "7px",
-      padding: "10px"
-    },
-  },
-  dates: new Date(),
-},
-]);
+const today = new Date();
+const date = ref(today);
+
+const tomorrow = new Date();
+const disabledDates = ref([{ start: tomorrow.setDate(today.getDate()+1), end: null }]);
 
 const selectAttribute = ref({
   highlight: {
@@ -29,8 +21,6 @@ const selectAttribute = ref({
     },
   }
 })
-
-
 
 // Current selected amount to pay
 const amountToPay = ref<number | null>(null);
@@ -45,51 +35,81 @@ watch(date, (newDate) => {
   const dateString = newDate.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
   amountToPay.value = props.paymentData[dateString] || null; // Get the amount or null if not found
 });
+
+const emit = defineEmits(["close"]);
+
+function closePopup() {
+  emit("close");
+}
 </script>
 
 <template>
-  <div class="calendar">
-    <div class="deferred-payment-date">
-      <p class="title">Atliktais maksājuma datums</p>
-      <div class="date">
-        <span class="day">
-          {{ date.getDate() }}
-        </span>
-        <span class="month">
-          {{ months[date.getMonth()] }}
-        </span>
-        <span class="year">
-          {{ date.getFullYear() }}
-        </span>
+  <div v-if="props.show" class="popup-overlay" @click.self="closePopup">
+    <div class="calendar">
+      <div class="deferred-payment-date">
+        <p class="title">Atliktais maksājuma datums</p>
+        <div class="date">
+          <span class="day">
+            {{ date.getDate() }}
+          </span>
+          <span class="month">
+            {{ months[date.getMonth()].slice(0,3) }}.
+          </span>
+          <span class="year">
+            {{ date.getFullYear() }}
+          </span>
+        </div>
+        <div class="amount-to-pay" v-if="amountToPay !== null">
+          <p>
+            Summa apmaksai
+          </p>
+          <p class="amount">
+            {{ amountToPay }} $
+          </p>
+        </div>
+        <Button variant="secondary2-mobile">Apsitptināt</Button>
       </div>
-      <div class="amount-to-pay" v-if="amountToPay !== null">
-        <p>
-          Summa apmaksai
-        </p>
-        <p class="amount">
-          {{ amountToPay }} $
-        </p>
-      </div>
-      <Button variant="secondary2-mobile">Apsitptināt</Button>
+      <VDatePicker
+        v-model="date" 
+        :select-attribute="selectAttribute"
+        title-position="left"
+        borderless
+        expanded
+        :disabled-dates="disabledDates"
+      />
     </div>
-    <VDatePicker
-      v-model="date" 
-      :attributes="attrs"
-      :select-attribute="selectAttribute"
-      title-position="left"
-      borderless
-    />
-    </div>
+  </div>
 </template>
 
 <style scoped>
 .calendar{
   display: flex;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
 .deferred-payment-date{
+  text-align: center;
   color: var(--text-white);
   background-color: var(--bg-black);
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  padding: 25px 28px 38px;
 }
 
 .title{
@@ -99,8 +119,12 @@ watch(date, (newDate) => {
 .date{
   display: grid;
   grid-template-columns: auto auto;
+  column-gap: 10px;
   justify-items: center;
+  justify-content: center;
   align-items: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .day{
@@ -109,7 +133,17 @@ watch(date, (newDate) => {
   font-weight: bold;
 }
 
+.amount-to-pay{
+  margin-bottom: 30px;
+}
+
 .amount{
   color: var(--text-green);
+}
+
+.calendar :deep(.vc-container){
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding: 25px;
 }
 </style>

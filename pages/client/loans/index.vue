@@ -42,6 +42,7 @@ const paymentData: { [key: string]: number } = {
   '2025-03-03': 100.76,
   '2025-03-04': 150,
   '2025-03-05': 200.25,
+  '2025-03-25': 200.25,
 };
 
 </script>
@@ -113,10 +114,10 @@ const paymentData: { [key: string]: number } = {
     <div class="contracts">
       <h1>Tavi līgumi</h1>
       <Contract v-for="n in 4" :key="n"
-                :contract-number="5165665"
-                :loan-amount="12000"
-                :next-payment-amount="312.31"
-                :payment-deadline="'05.12.24'"
+        :contract-number="5165665"
+        :loan-amount="12000"
+        :next-payment-amount="312.31"
+        :payment-deadline="'05.12.24'"
       />
     </div>
     <div class="carousel">
@@ -146,9 +147,7 @@ const paymentData: { [key: string]: number } = {
     <PaymentMethods/>
   </Popup>
 
-  <Popup :show="paymentCalendarPopup" @close="paymentCalendarPopup = false">
-    <Calendar :payment-data="paymentData"/>
-  </Popup>
+  <Calendar :show="paymentCalendarPopup" @close="paymentCalendarPopup = false" :payment-data="paymentData"/>
 </template>
 
 <style scoped>
