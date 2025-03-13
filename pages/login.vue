@@ -5,13 +5,9 @@ useHead({
 </script>
 
 <template>
-<!--  <div class="wrapper">-->
-<!--    <div class="container">-->
-      <div class="content">
-        <Login />
-      </div>
-<!--    </div>-->
-<!--  </div>-->
+  <div class="content">
+    <Login />
+  </div>
 </template>
 
 <style scoped>

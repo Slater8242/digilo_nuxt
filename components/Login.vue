@@ -1,15 +1,46 @@
 <script setup lang="ts">
+import useAuthStore from '~/store/auth';
+import Button from './ui/Button.vue';
 
+const username = ref("averyp");
+const password = ref("averyppass");
+const errMessage = ref("");
+
+const authStore = useAuthStore();
+
+const handleSubmit = async ()=>{
+  try{
+    const res = await authStore.login(username.value, password.value);
+    navigateTo("/investor")
+  }catch(err){
+    errMessage.value = "Invalid credentials"
+  }
+}
 </script>
 
 <template>
 <div class="login">
   <h5 class="welcome-text">Laipni lūgts atpakaļ!  </h5>
-  <form class="login-form" @click.prevent="">
-    <input type="text" name="user-number" placeholder="Lietotāja numurs" class="form-input">
-    <input type="password" name="password" placeholder="Parole" class="form-input">
-    <button type="submit">Ienākt</button>
+  <form class="login-form" @submit.prevent="handleSubmit">
+    <input 
+      v-model="username"
+      type="text" 
+      name="user-number" 
+      placeholder="Lietotāja numurs" 
+      class="form-input"
+      >
+    <input 
+      v-model="password"
+      type="password" 
+      name="password" 
+      placeholder="Parole" 
+      class="form-input"
+      >
+    <Button>Ienākt</Button>
   </form>
+  <div v-if="errMessage">
+    {{ errMessage }}
+  </div>
   <div class="links">
     <NuxtLink to="#">
       <span>Aizmirsu savu paroli</span>

@@ -1,52 +1,72 @@
-<script setup lang="ts">
-import { Line } from 'vue-chartjs'
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
-
-
-ChartJS.register(Title, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement)
-
-const chartOptions = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false
-    },
-    tooltip: {
-      enabled: true,
-      intersect: false
-    }
-  },
-  scales: {
-    x: { display: true },
-    y: { display: false }
-  }
-}
-
-
-const chartData = {
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-  datasets: [
-    {
-      label: 'Sales',
-      data: [10, 20, 15, 30, 25],
-      borderColor: 'blue',
-      borderWidth: 2,
-      pointRadius: 5,
-      pointHoverRadius: 7,
-      fill: false
-    }
-  ]
-}
-
-</script>
-
 <template>
-  <Line
-    :options="chartOptions"
-    :data="chartData"
-  />
+  <div class="chart-container">
+    <canvas ref="chartCanvas"></canvas>
+  </div>
 </template>
 
-<style scoped>
+<script setup>
+import { ref, onMounted } from "vue";
+import Chart from "chart.js/auto";
 
+const chartCanvas = ref(null);
+
+onMounted(() => {
+  if (chartCanvas.value) {
+    const ctx = chartCanvas.value.getContext("2d");
+
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, "rgba(0, 200, 0, 0.3)");
+    gradient.addColorStop(1, "rgba(0, 200, 0, 0)");
+
+    new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: ["Dec", "Jan", "Feb", "Mar", "Apr", "May"],
+        datasets: [
+          {
+            label: "Account Value",
+            data: [2700, 2500, 2900, 2800, 3200, 3400],
+            borderColor: "#2ecc71",
+            backgroundColor: gradient,
+            fill: true,
+            tension: 0.3,
+            pointRadius: 0,
+            pointBackgroundColor: "#ffffff",
+            pointBorderColor: "#2ecc71",
+            pointHoverRadius: 14,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            mode:"index",
+            intersect:false,
+            callbacks: {
+              label: (tooltipItem) => `$ ${tooltipItem.raw}`,
+            },
+          },
+        },
+        scales: {
+          x: { 
+            grid: { display: false },
+            ticks: {color: "#444", font: { weight: "bold" }}
+          },
+          y: { display: false },
+        },
+      },
+    });
+  }
+});
+</script>
+
+<style scoped>
+.chart-container {
+  width: 100%;
+  height: 250px;
+  position: relative;
+}
 </style>

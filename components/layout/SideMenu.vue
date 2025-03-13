@@ -5,18 +5,22 @@ import ChatIcon from "@/assets/icons/mail.svg"
 import LoanIcon from "@/assets/icons/loan.svg"
 import HelpIcon from "@/assets/icons/help.svg"
 import LogoutIcon from "@/assets/icons/logout.svg"
-// import useAuthStore from "../stores/auth.ts";
+import useAuthStore from "@/store/auth";
 
-// const authStore = useAuthStore();
-
+const authStore = useAuthStore();
 const route = useRoute();
 
 const isActive = (path:string) => {
   return route.path === path
 };
 
-function capitalizeFirstLetter(val:string) {
+const capitalizeFirstLetter=(val:string) => {
   return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+}
+
+const logout = ()=>{
+  authStore.logout();
+  console.log("click");  
 }
 </script>
 
@@ -52,7 +56,7 @@ function capitalizeFirstLetter(val:string) {
         <HelpIcon filled/>
         {{ capitalizeFirstLetter($t(`sideMenu.help`))}}
       </li>
-      <li class="menu-item">
+      <li class="menu-item" @click="logout">
         <LogoutIcon filled/>
         {{capitalizeFirstLetter($t("sideMenu.logout"))}}
       </li>
