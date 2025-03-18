@@ -1,9 +1,13 @@
 <script setup lang="ts">
-definePageMeta({
-  layout: "user",
-  middleware: ['redirect']
-})
-useHead({
-  title: "Client"
-})
+// definePageMeta({middleware: ["role"]})
 </script>
+
+<template>
+  <div>
+
+  </div>
+</template>
+
+<style scoped>
+
+</style>

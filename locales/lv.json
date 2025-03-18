@@ -9,5 +9,9 @@
   },
   "investor": {
 
+  },
+  "footer": {
+    "creditTypes": "Kredīta veidi",
+    "contacts": "Kontakti"
   }
 }

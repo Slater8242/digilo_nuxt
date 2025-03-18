@@ -1,9 +1,11 @@
 <script setup lang="ts">
-definePageMeta({ middleware: 'redirect' })
+// definePageMeta({middleware: ["role"]})
 </script>
 
 <template>
+  <div>
 
+  </div>
 </template>
 
 <style scoped>

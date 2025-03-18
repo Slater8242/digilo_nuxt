@@ -10,8 +10,12 @@ const authStore = useAuthStore();
 
 const handleSubmit = async ()=>{
   try{
-    const res = await authStore.login(username.value, password.value);
-    navigateTo("/investor")
+    await authStore.login(username.value, password.value);
+    if (authStore.role === "admin") {
+      navigateTo("/investor")
+    }else if(authStore.role === "user"){
+      navigateTo("/client/loans")
+    }
   }catch(err){
     errMessage.value = "Invalid credentials"
   }

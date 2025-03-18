@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import SideMenu from "~/components/layout/SideMenu.vue";
 import TopMenu from "~/components/layout/TopMenu.vue";
 import Footer from "~/components/layout/Footer.vue";

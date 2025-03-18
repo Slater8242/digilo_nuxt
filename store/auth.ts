@@ -1,18 +1,11 @@
 import { defineStore } from 'pinia'
 
-interface User {
-  id: number
-  username: string
-  email: string
-  role: string
-  token: string
-}
-
 interface AuthResponse {
   id: number
   username: string
   email?: string
-  token: string
+  accessToken: string 
+  refreshToken: string
 }
 
 interface UserResponse {
@@ -21,8 +14,10 @@ interface UserResponse {
 }
 
 const useAuthStore = defineStore('auth', () => {
-  const user = ref<User | null>(null)
-  const isAuthenticated = computed(() => !!user.value)
+  const accessToken = useCookie<string | null>("access-token", {default: ()=> null})
+  const refreshToken = useCookie<string | null>("refresh-token", {default: ()=> null})
+  const role = useCookie<string>("role", {default: ()=> "guest"})
+  const isAuthenticated = computed(() => !!accessToken.value)
 
   async function login(username: string, password: string) {
     try {
@@ -35,15 +30,17 @@ const useAuthStore = defineStore('auth', () => {
       
       const userData = await $fetch<UserResponse>(`https://dummyjson.com/users/${authData.id}`)
       
-      user.value = {
-        id: authData.id,
-        username: authData.username,
-        email: authData.email || '',
-        role: userData.role || 'user',
-        token: authData.token
-      }
+      accessToken.value = authData.accessToken;
+      refreshToken.value = authData.refreshToken;
+      role.value = userData.role;      
+      
+      // if (role.value === "user") {
+      //   navigateTo("/client/loans")
+      // }
 
-      return userData.role
+      // if (role.value === "admin") {
+      //   navigateTo("/investor/overview")
+      // }
     } catch (err) {
       console.error('Login failed:', err)
       throw err
@@ -51,11 +48,13 @@ const useAuthStore = defineStore('auth', () => {
   }
 
   function logout() {
-    user.value = null
+    accessToken.value = null;
+    refreshToken.value = null;
+    role.value = "guest";
     navigateTo("/")
   }
 
-  return { user, isAuthenticated, login, logout }
+  return { accessToken, refreshToken, role, isAuthenticated, login, logout }
 })
 
 export default useAuthStore;

@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import PdfIcon from "assets/icons/pdf.svg";
+import Button from "~/components/ui/Button.vue";
 
 definePageMeta({
   layout: 'user',
+})
+
+useHead({
+  title: "Portfolio"
 })
 
 const testData = [
@@ -49,7 +54,7 @@ const testData = [
   <div class="investment">
     <div class="investment-top">
       <h1>My Investments</h1>
-      <Button size="medium">View all reports</Button>
+      <Button>View all reports</Button>
     </div>
     <table class="table-styling">
       <tbody>
