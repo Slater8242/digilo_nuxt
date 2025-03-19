@@ -3,9 +3,12 @@
     "loans": "Mani aizdevumi",
     "profile": "Mans profils",
     "chat": "Sarakste",
-    "help": "Palīdzība",
     "portfolio": "Portfolio",
     "overview": "Overview",
+    "help": "Palīdzība",
+    "creditType": "Kredīta veidi",
+    "contacts": "Kontakti",
+    "blogs": "Blogs",
     "logout": "Logout",
     "terms": "Lietošanas noteikumi"
   },

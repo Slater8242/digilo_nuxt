@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import 'vue3-carousel/carousel.css'
 import PdfIcon from "@/assets/icons/pdf.svg"
-import avatar from "@/assets/images/avatar.png"
 import sliderImage from "@/assets/images/slider-image.jpeg"
 import {Progress, Contract} from "#components";
 import { Carousel, Slide, Pagination } from 'vue3-carousel'
@@ -10,6 +9,7 @@ import pdfFile from "@/public/sample.pdf"
 import PaymentMethods from "~/components/popups/PaymentMethods.vue";
 import Button from "~/components/ui/Button.vue";
 import Calendar from '~/components/popups/Calendar.vue';
+import useUserStore from "~/store/user";
 
 definePageMeta({
   layout: "user"
@@ -18,6 +18,8 @@ definePageMeta({
 useHead({
   title: "Loans",
 })
+
+const userData = useUserStore().userData;
 
 const paymentMethodsPopup = ref(false);
 const paymentCalendarPopup = ref(false);
@@ -52,10 +54,10 @@ const paymentData: { [key: string]: number } = {
     <div class="overview">
       <div class="user-data">
         <div class="user-info">
-          <img :src="avatar" alt="avatar" class="avatar">
+          <img :src="userData?.image" alt="avatar" class="avatar">
           <div class="user-name">
             <span>Sveiki!</span>
-            <span>Janis Dzenis</span>
+            <span>{{userData?.firstName}} {{userData?.lastName}}</span>
           </div>
         </div>
         <div class="user-loan">

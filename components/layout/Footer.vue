@@ -3,8 +3,21 @@ import Logo from "@/assets/icons/white-logo.svg"
 import FacebookIcon from "@/assets/icons/facebook.svg"
 import InstagramIcon from "@/assets/icons/instagram.svg"
 import LinkedinIcon from "@/assets/icons/linkedin.svg"
+import useUserStore from "~/store/user";
 
-const socialArray = [{
+interface Buttons{
+  name: string,
+  link: string,
+}
+
+const userStore = useUserStore();
+const {locale} = useI18n();
+
+const navButtons = ref<Buttons[]>([]);
+const rolePrefix = ref<string>("");
+
+const socialArray = [
+  {
     name: "instagram",
     link: "https://www.instagram.com/",
     icon: InstagramIcon
@@ -18,7 +31,38 @@ const socialArray = [{
     name: "linkedin",
     link: "https://www.linkedin.com/",
     icon: LinkedinIcon
-  }]
+  }
+]
+
+const clientButtons = [
+  {name:"loans", link: `/${locale.value}/client/loans`},
+  {name:"profile", link: `/${locale.value}/client/profile`},
+  {name:"chat", link: `/${locale.value}/client/chat`},
+]
+const investorButtons = [
+  {name:"overview", link: `/${locale.value}/investor/overview`},
+  {name:"portfolio", link: `/${locale.value}/investor/portfolio`},
+  {name:"profile", link: `/${locale.value}/investor/profile`},
+]
+const guestButtons = [
+  {name:"creditType", link: `/creditType`},
+  {name:"contacts", link: `/contacts`},
+  {name:"blogs", link: `/blogs`},
+]
+
+switch (userStore.role) {
+  case "user":
+    navButtons.value = clientButtons;
+    rolePrefix.value = "client";
+    break;
+  case "admin":
+    navButtons.value = investorButtons;
+    rolePrefix.value = "investor";
+    break;
+  default:
+    navButtons.value = guestButtons;
+    break;
+}
 </script>
 
 <template>
@@ -39,15 +83,11 @@ const socialArray = [{
     </div>
     <div class="nav">
         <ul class="nav-list">
-          <NuxtLink to="#">
-            <li>{{ $t("pages.loans") }}</li>
-          </NuxtLink>
-          <NuxtLink to="#">
-            <li>{{ $t("pages.profile") }}</li>
-          </NuxtLink>
-          <NuxtLink to="#">
-            <li>{{ $t('pages.chat') }}</li>
-          </NuxtLink>
+          <li v-for="button in navButtons" :key="button.name">
+            <NuxtLink :to="button.link">
+              {{ $t(`pages.${button.name}`) }}
+            </NuxtLink>
+          </li>
         </ul>
       <div class="nav-login-lang">
         <NuxtLink class="nav-login-btn" to="/login">Log in</NuxtLink>
@@ -81,11 +121,6 @@ footer {
   font-size: 14px;
   padding-top: 20px;
   padding-bottom: 40px;
-}
-
-.nuxt-icon{
-  height: inherit;
-  margin-bottom: 0;
 }
 
 footer ul{

@@ -2,6 +2,7 @@
 import Popup from "~/components/popups/Popup.vue";
 import ResetPassword from "~/components/popups/ResetPassword.vue";
 import UploadPhotos from "~/components/popups/UploadImages.vue";
+import useUserStore from "~/store/user";
 
 definePageMeta({
   layout: "user"
@@ -10,6 +11,8 @@ definePageMeta({
 useHead({
   title: "Profile",
 })
+
+const userData = useUserStore().userData;
 
 const fields = ref([
   { label: "Vārds", name: "first-name", type: "text", value: "" },
@@ -27,27 +30,25 @@ const fields = ref([
 const uploadImagePopup = ref(false);
 const resetPasswordPopup = ref(false);
 
-const avatar = ref<string | null>(null);
-
-function handleFileChange(event: Event) {
-  const target = event.target as HTMLInputElement;
-  if (!target.files || target.files.length === 0) return;
-
-  const file: File = target.files[0];
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-
-  reader.onload = (e: ProgressEvent<FileReader>) => {
-    if (e.target && typeof e.target.result === "string") {
-      avatar.value = e.target.result;
-    }
-  };
-}
+// function handleFileChange(event: Event) {
+//   const target = event.target as HTMLInputElement;
+//   if (!target.files || target.files.length === 0) return;
+//
+//   const file: File = target.files[0];
+//   const reader = new FileReader();
+//   reader.readAsDataURL(file);
+//
+//   reader.onload = (e: ProgressEvent<FileReader>) => {
+//     if (e.target && typeof e.target.result === "string") {
+//       avatar.value = e.target.result;
+//     }
+//   };
+// }
 </script>
 
 <template>
   <div class="avatar-container">
-    <img v-if="avatar" :src="avatar" alt="avatar" class="avatar"/>
+    <img v-if="userData?.image" :src="userData.image" alt="avatar" class="avatar"/>
     <div v-else class="placeholder">Izvēlieties attēlu</div>
     <label class="upload-avatar" @click="uploadImagePopup = true"/>
   </div>
@@ -157,10 +158,6 @@ label{
 .full-name{
   display: flex;
   column-gap: 20px;
-}
-
-#first-name, #last-name{
-  width: 170px;
 }
 
 .form-input{

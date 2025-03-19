@@ -8,7 +8,7 @@ import Logo from "assets/icons/black-logo.svg"
     <Logo class="logo" filled/>
   </NuxtLink>
   <div class="lang">
-    <span>LV</span>
+    <LangSwitcher />
   </div>
 </header>
 </template>
@@ -20,31 +20,16 @@ header{
   align-items: center;
 }
 
-.nuxt-icon{
-  width: 81px;
-  height: 26px;
-}
-
 .lang{
   font-size: 14px;
 }
 
 @media (min-width: 641px) {
-  .nuxt-icon{
-    width: 127px;
-    height: 42px;
-  }
-
   .lang{
     font-size: 18px;
   }
 }
 @media (min-width: 1281px) {
-  .nuxt-icon{
-    width: 127px;
-    height: 42px;
-  }
-
   .lang{
     font-size: 18px;
   }

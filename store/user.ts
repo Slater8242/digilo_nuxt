@@ -1,18 +1,20 @@
 interface UserResponse{
+  firstName: string,
+  lastName: string,
+  email: string,
   role: string,
   image: string
 }
 
 const useUserStore = defineStore("user",()=>{
-  const userData = ref<UserResponse | null>(null);
+  const userData = useCookie<UserResponse | null>("userData", {default: ()=> null});
   const role = useCookie<string>("role", {default: ()=> "guest"})
   
   const fetchUserData = async (userId:number)=>{
     try{
       const response = await $fetch<UserResponse>(`https://dummyjson.com/users/${userId}`)
       role.value = response.role
-      userData.value = response 
-      console.log(response);
+      userData.value = response
     }catch{
 
     }

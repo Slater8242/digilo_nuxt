@@ -3,9 +3,7 @@ definePageMeta({middleware: ["redirect"]})
 </script>
 
 <template>
-  <div>
 
-  </div>
 </template>
 
 <style scoped>
