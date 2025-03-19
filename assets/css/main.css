@@ -45,6 +45,9 @@
     --body1-mobile: 16px;
     --body2-mobile: 14px;
 
+    /* Headers */
+    --header1-desktop: 18px;
+    --header2-desktop: 16px;
     /* Buttons */
     --primary-button-desktop: 27px;
     --secondary-button-desktop: 25px;

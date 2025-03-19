@@ -7,17 +7,15 @@ import HelpIcon from "@/assets/icons/help.svg"
 import LogoutIcon from "@/assets/icons/logout.svg"
 import PortfolioIcon from "@/assets/icons/portfolio.svg"
 import useAuthStore from "@/store/auth";
+import useUserStore from "~/store/user"
 
 const authStore = useAuthStore();
+const userStore = useUserStore();
 const route = useRoute();
 
 const isActive = (path:string) => {  
   return route.path.endsWith(path)
 };
-
-const capitalizeFirstLetter=(val:string) => {
-  return String(val).charAt(0).toUpperCase() + String(val).slice(1);
-}
 
 const logout = ()=>{
   authStore.logout();
@@ -32,50 +30,48 @@ const logout = ()=>{
           <Logo :style="{width:'127px', height: '45px'}" filled/>
         </NuxtLink>
       </li>
-      <li v-if="authStore.role === 'user'">
+      <li v-if="userStore.role === 'user'">
         <NuxtLink to="loans" class="menu-item" :class="{ active: isActive('/loans') }">
           <LoanIcon filled/>
-          {{ capitalizeFirstLetter($t(`sideMenu.loans`)) }}
+          {{ $t("pages.loans") }}
         </NuxtLink>
       </li>
-      <li v-if="authStore.role === 'admin'">
+      <li v-if="userStore.role === 'admin'">
         <NuxtLink to="overview" class="menu-item" :class="{ active: isActive('/overview') }">
           <LoanIcon filled/>
-          Overview
-          <!-- {{ capitalizeFirstLetter($t(`sideMenu.loans`)) }} -->
+          {{ $t("pages.overview") }}
         </NuxtLink>
       </li>
-      <li v-if="authStore.role === 'admin'">
+      <li v-if="userStore.role === 'admin'">
         <NuxtLink to="portfolio" class="menu-item" :class="{ active: isActive('/portfolio') }">
           <PortfolioIcon filled/>
-          Portfolio
-          <!-- {{ capitalizeFirstLetter($t(`sideMenu.loans`)) }} -->
+          {{ $t("pages.portfolio") }}
         </NuxtLink>
       </li>
       <li>
         <NuxtLink to="profile" class="menu-item" :class="{ active: isActive('/profile') }">
           <ProfileIcon filled/>
-          {{ capitalizeFirstLetter($t(`sideMenu.profile`)) }}
+          {{ $t("pages.profile") }}
         </NuxtLink>
       </li>
-      <li v-if="authStore.role === 'user'">
+      <li v-if="userStore.role === 'user'">
         <NuxtLink to="chat" class="menu-item" :class="{ active: isActive('/chat') }">
           <ChatIcon filled/>
-          {{ capitalizeFirstLetter($t(`sideMenu.chat`)) }}
+          {{ $t("pages.chat") }}
         </NuxtLink>
       </li>
     </ul>
     <ul class="bottom-menu">
       <li class="menu-item">
         <HelpIcon filled/>
-        {{ capitalizeFirstLetter($t(`sideMenu.help`))}}
+        {{ $t("pages.help")}}
       </li>
       <li @click="logout" class="menu-item">
         <LogoutIcon filled/>
-        {{capitalizeFirstLetter($t("sideMenu.logout"))}}
+        {{$t("pages.logout")}}
       </li>
       <li class="menu-item">
-        {{capitalizeFirstLetter($t("sideMenu.terms"))}}
+        {{$t("pages.terms")}}
       </li>
     </ul>
   </div>

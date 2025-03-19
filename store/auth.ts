@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import useUserStore from './user'
 
 interface AuthResponse {
   id: number
@@ -8,15 +9,11 @@ interface AuthResponse {
   refreshToken: string
 }
 
-interface UserResponse {
-  id: number
-  role: string
-}
-
 const useAuthStore = defineStore('auth', () => {
+  const userStore = useUserStore();
+
   const accessToken = useCookie<string | null>("access-token", {default: ()=> null})
   const refreshToken = useCookie<string | null>("refresh-token", {default: ()=> null})
-  const role = useCookie<string>("role", {default: ()=> "guest"})
   const isAuthenticated = computed(() => !!accessToken.value)
 
   async function login(username: string, password: string) {
@@ -28,19 +25,10 @@ const useAuthStore = defineStore('auth', () => {
 
       if (!authData.id) throw new Error('User ID not found')
       
-      const userData = await $fetch<UserResponse>(`https://dummyjson.com/users/${authData.id}`)
+      await userStore.fetchUserData(authData.id);
       
       accessToken.value = authData.accessToken;
       refreshToken.value = authData.refreshToken;
-      role.value = userData.role;      
-      
-      // if (role.value === "user") {
-      //   navigateTo("/client/loans")
-      // }
-
-      // if (role.value === "admin") {
-      //   navigateTo("/investor/overview")
-      // }
     } catch (err) {
       console.error('Login failed:', err)
       throw err
@@ -50,11 +38,12 @@ const useAuthStore = defineStore('auth', () => {
   function logout() {
     accessToken.value = null;
     refreshToken.value = null;
-    role.value = "guest";
+    userStore.resetUserRole();
+    userStore.resetUserData();
     navigateTo("/")
   }
 
-  return { accessToken, refreshToken, role, isAuthenticated, login, logout }
+  return { accessToken, refreshToken, isAuthenticated, login, logout }
 })
 
 export default useAuthStore;

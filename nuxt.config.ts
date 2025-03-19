@@ -10,7 +10,7 @@ export default defineNuxtConfig({
       { code: 'en', iso: 'en-US', name: 'English' }
     ],
     defaultLocale: 'lv', // Задай язык по умолчанию
-    strategy: 'prefix_and_default',
+    strategy: 'prefix',
     vueI18n: './i18n.config.ts' // if you are using custom path, default
   }
 })

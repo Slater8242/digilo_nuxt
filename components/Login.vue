@@ -1,20 +1,22 @@
 <script setup lang="ts">
 import useAuthStore from '~/store/auth';
 import Button from './ui/Button.vue';
+import useUserStore from '~/store/user';
 
 const username = ref("averyp");
 const password = ref("averyppass");
 const errMessage = ref("");
 
 const authStore = useAuthStore();
+const userStore = useUserStore();
 
 const handleSubmit = async ()=>{
   try{
     await authStore.login(username.value, password.value);
-    if (authStore.role === "admin") {
-      navigateTo("/investor")
-    }else if(authStore.role === "user"){
-      navigateTo("/client/loans")
+    if (userStore.role === "admin") {
+      navigateTo("investor")
+    }else if(userStore.role === "user"){
+      navigateTo("client")
     }
   }catch(err){
     errMessage.value = "Invalid credentials"

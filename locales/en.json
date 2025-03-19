@@ -1,11 +1,13 @@
 {
-  "sideMenu": {
-    "loans": "my loans",
-    "profile": "my profile",
-    "chat": "chat",
-    "help": "help",
-    "logout": "logout",
-    "terms": "terms of use"
+  "pages": {
+    "loans": "My loans",
+    "profile": "My profile",
+    "chat": "Chat",
+    "portfolio": "Portfolio",
+    "overview": "Overview",
+    "help": "Help",
+    "logout": "Logout",
+    "terms": "Terms of use"
   },
   "profile": {
     "loans": {

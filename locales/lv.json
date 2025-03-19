@@ -1,17 +1,20 @@
 {
-  "sideMenu": {
-    "loans": "mani aizdevumi",
-    "profile": "mans profils",
-    "chat": "sarakste",
-    "help": "palīdzība",
-    "logout": "logout",
-    "terms": "lietošanas noteikumi"
+  "pages": {
+    "loans": "Mani aizdevumi",
+    "profile": "Mans profils",
+    "chat": "Sarakste",
+    "help": "Palīdzība",
+    "portfolio": "Portfolio",
+    "overview": "Overview",
+    "logout": "Logout",
+    "terms": "Lietošanas noteikumi"
   },
   "investor": {
 
   },
   "footer": {
     "creditTypes": "Kredīta veidi",
-    "contacts": "Kontakti"
+    "contacts": "Kontakti",
+    "blogs": "Blogs"
   }
 }

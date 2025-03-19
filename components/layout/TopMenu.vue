@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import profileImage from "assets/images/avatar.png"
 import NotificationIcon from "assets/icons/notification.svg"
+import useUserStore from "~/store/user";
+
+const userStore = useUserStore();
+const userData = userStore.userData;
+console.log(userStore.userData);
 </script>
 
 <template>
@@ -9,11 +14,10 @@ import NotificationIcon from "assets/icons/notification.svg"
       <NotificationIcon style="height: 22px; width: 19px;" filled/>
     </div>
     <div class="languages">
-      <strong>LV</strong>
-      <p class="language-selector">EN</p>
+      <LangSwitcher/>
     </div>
     <div class="profile-menu">
-      <img :src="profileImage" alt="profile-image" class="profile-image">
+      <img :src="userData?.image" alt="profile-image" class="profile-image">
       <span class="profile-name">
         Janis D.
       </span>
@@ -30,21 +34,6 @@ import NotificationIcon from "assets/icons/notification.svg"
 
   .notifications{
     cursor: pointer;
-  }
-  
-  .language-selector{
-    display: none;
-    font-weight: 700;
-    font-size: 20px;
-  }
-
-  .languages:hover{
-    color: #3DCE15;
-  }
-
-  .languages:hover .language-selector{
-    display: block;
-    position: absolute;
   }
 
   .profile-menu{

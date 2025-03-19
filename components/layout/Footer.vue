@@ -4,15 +4,6 @@ import FacebookIcon from "@/assets/icons/facebook.svg"
 import InstagramIcon from "@/assets/icons/instagram.svg"
 import LinkedinIcon from "@/assets/icons/linkedin.svg"
 
-const localePath = useLocalePath();
-
-const { locale, locales, setLocale  } = useI18n()
-const switchLocalePath = useSwitchLocalePath()
-
-const availableLocales = computed(() => {
-  return locales.value.filter(i => i.code !== locale.value)
-})
-
 const socialArray = [{
     name: "instagram",
     link: "https://www.instagram.com/",
@@ -49,48 +40,29 @@ const socialArray = [{
     <div class="nav">
         <ul class="nav-list">
           <NuxtLink to="#">
-            <li>
-              <span>{{ $t("footer.creditTypes") }}</span>
-            </li>
+            <li>{{ $t("pages.loans") }}</li>
           </NuxtLink>
           <NuxtLink to="#">
-            <li>
-              <span>{{ $t("footer.contacts") }}</span>
-            </li>
+            <li>{{ $t("pages.profile") }}</li>
           </NuxtLink>
           <NuxtLink to="#">
-            <li>
-              <span>Blogs</span>
-            </li>
+            <li>{{ $t('pages.chat') }}</li>
           </NuxtLink>
         </ul>
       <div class="nav-login-lang">
         <NuxtLink class="nav-login-btn" to="/login">Log in</NuxtLink>
-        <div class="nav-lang">
-          <NuxtLink v-for="locale in availableLocales" :key="locale.code" :to="switchLocalePath(locale.code)">
-            {{ locale.name }}
-          </NuxtLink>
-
-          <a href="#" v-for="locale in availableLocales" :key="locale.code" @click.prevent.stop="setLocale(locale.code)">
-            {{ locale.name }}
-          </a>
-          <!-- <span>LV</span> -->
-        </div>
+        <LangSwitcher />
       </div>
     </div>
     <div class="policy">
       <ul>
-        <NuxtLink :to="localePath('index','en')">
-          <li>
-            <span>Privacy policy</span>
-          </li>
+        <NuxtLink to="#">
+          <li>{{ $t('pages.help') }}</li>
         </NuxtLink>
       </ul>
       <ul>
         <NuxtLink to="#">
-          <li>
-            <span>Rules</span>
-          </li>
+          <li>{{ $t('pages.terms') }}</li>
         </NuxtLink>
       </ul>
     </div>
